@@ -1,0 +1,61 @@
+import java.io.*; 
+import java.util.*; 
+
+class Main {
+	public static void main (String[] args) {
+                     
+	String participants_list[][] = {
+    {"Sam", "Emma", "Joan", "Krish", "John", "Desmond", "Tom", "Nicole" },
+    {"Brad", "Walter", "Sam", "Krish","Desmond", "Jennifer"},
+    {"Tom", "Krish", "Emma", "Mia", "Nicole", "Sam", "Desmond"},
+    {"Desmond", "Sam", "Krish", "Mia", "Harry"},
+    {"Ron", "Ginny", "Ted", "Krish", "Mia", "Sam", "Sachin", "Desmond", "Kapil"},
+    {"Krish", "Brad", "Walter", "Jennifer","Desmond", "Harry", "Nicole", "Sam", "Jan"}
+	};//group of participants list
+	HashMap<String,Integer> hm=new HashMap<>();  //count each participants attendance
+	ArrayList<String> dailypart=new ArrayList<String>();//list of participants who comes daily 
+	ArrayList<String> onlyonce=new ArrayList<String>();//list of participants who comes only onlyonce
+	ArrayList<String> firstOrlast=new ArrayList<String>();//list of participants who comes firstday or last day
+	for(int i=0;i<participants_list.length;i++){
+		for(int j=0;j<participants_list[i].length;j++){
+			hm.put(participants_list[i][j],hm.getOrDefault(participants_list[i][j], 0) + 1);
+			//add into hashmap to count attendance
+		}
+	}
+
+	for(int i=0;i<participants_list[0].length;i++){//iterate firstday participants list
+	   if(hm.get(participants_list[0][i])==1){
+		   firstOrlast.add(participants_list[0][i]);
+		   //add into list who are only present firstday
+	   }
+   }
+
+	int lastdaylen=participants_list.length;
+   for(int i=0;i<participants_list[lastdaylen-1].length;i++){//iterate lastday participants list
+	   if(hm.get(participants_list[lastdaylen-1][i])==1){
+		   firstOrlast.add(participants_list[lastdaylen-1][i]);
+		  //add into list who are only present lastday
+	   }
+   }
+
+
+	for(int i=0;i<participants_list.length;i++){
+		for(int j=0;j<participants_list[i].length;j++){
+			////iterate group of participants list
+			  if(hm.get(participants_list[i][j])==1){
+				  onlyonce.add(participants_list[i][j]);//add into list who are only present once
+			  }
+			 if(hm.get(participants_list[i][j])==participants_list.length){
+				 if(!dailypart.contains(participants_list[i][j])){//filtering repeating participants
+					 dailypart.add(participants_list[i][j]); //add into list who are present daily
+				 }
+			 }
+		}
+	}
+
+	System.out.println(dailypart);
+	System.out.println(onlyonce);
+	System.out.println(firstOrlast);
+
+	}
+}
